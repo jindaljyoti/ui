@@ -13,7 +13,6 @@ const RovingFocusRoot = ({ children, itemCount, orientation, dir, loop=true }:Ro
     const [focusedIndex, setFocusedIndex] = useState(0);
     const itemRefs = useRef<(HTMLElement | null)[]>([])
    
-
     const getNavigationKeys = () => {
         if(orientation === 'horizontal') {
             return dir === 'rtl' ? {next: 'ArrowLeft', prev: 'ArrowRight'}:

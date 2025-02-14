@@ -33,12 +33,12 @@ const RovingFocusItem = ({ children, index, asChild, onFocus, ...props}:RovingFo
          tabIndex={focusedIndex === index ? 0 : -1}
          onKeyDown={handleKeyDown}
          onFocus={() => setFocusedIndex(index)}
-         role= 'button'
+         role= 'toolbar'
          {...props}
 
         >
-            {children}
-    
+         {children}
+         
     </div>
     
 }

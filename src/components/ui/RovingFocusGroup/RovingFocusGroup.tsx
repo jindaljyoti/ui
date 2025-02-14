@@ -1,9 +1,17 @@
-import RovingFocusRoot from './fragments/RovingFocusRoot';
-import RovingFocusItem from './fragments/RovingFocusItem';
+import React from "react";
 
-const RovingFocusGroup = {} as const;
+type RovingFocusGroupType = {
+    children: React.ReactNode;
+}
 
-RovingFocusGroup.Root = RovingFocusRoot;
-RovingFocusGroup.Item = RovingFocusItem;
+const RovingFocusGroup = ({ children }:RovingFocusGroupType) => {
+    
+    return (
+        <div>
+            {children}
+        </div>
+        
+    )
+}
 
 export default RovingFocusGroup;
