@@ -1,6 +1,5 @@
-import React, { useEffect, useRef } from "react";
+import React, { cloneElement, ReactElement, useEffect, useRef } from "react";
 import { useRovingFocus } from "./RovingFocusRoot";
-import { useKeyboardNavigation } from "../helpers/useKeyboardNavigation";
 
 type RovingFocusItemProps = {
    asChild?: boolean;
@@ -8,10 +7,9 @@ type RovingFocusItemProps = {
    children: React.ReactNode;
    index: number;
 }
-const RovingFocusItem = ({ children, index, asChild, onFocus, ...props}:RovingFocusItemProps) => { 
+const RovingFocusItem = ({ children, index, asChild=false, onFocus }:RovingFocusItemProps) => { 
  
      const {focusedIndex, setFocusedIndex, itemRefs} = useRovingFocus()
-     const handleKeyDown = useKeyboardNavigation();
      
      const ref = useRef<HTMLElement | null>(null)
 
@@ -28,19 +26,14 @@ const RovingFocusItem = ({ children, index, asChild, onFocus, ...props}:RovingFo
         }
      },[index,itemRefs,focusedIndex])
 
-    return <div className="p-2 border bg-gray-600 w-[100px]" 
-         ref={ref}
-         tabIndex={focusedIndex === index ? 0 : -1}
-         onKeyDown={handleKeyDown}
-         onFocus={() => setFocusedIndex(index)}
-         role= 'toolbar'
-         {...props}
-
-        >
-         {children}
-         
-    </div>
-    
+     const childProps = {
+      ref,
+      tabIndex: focusedIndex === index ? 0 : -1,
+      onFocus: () => setFocusedIndex(index),
+      role:'button',
+     }
+    return asChild ? cloneElement(children, childProps): <button {...childProps}> {children} </button>
+          
 }
 
 export default RovingFocusItem

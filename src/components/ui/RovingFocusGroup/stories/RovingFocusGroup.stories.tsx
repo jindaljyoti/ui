@@ -3,6 +3,7 @@ import SandboxEditor from "~/components/tools/SandboxEditor/SandboxEditor";
 import RovingFocusGroup from "../RovingFocusGroup";
 import RovingFocusItem from "../fragments/RovingFocusItem";
 import RovingFocus from "../RovingFocus";
+import Button from "../../Button/Button";
 
 const items = [
     {label: 'Item1'},
@@ -14,15 +15,16 @@ export default {
     component: RovingFocusGroup,
     render: () => <SandboxEditor>
         
-    <RovingFocus.Root itemCount={items.length}>
+    <RovingFocus.Root orientation="vertical" loop={true}>
         <RovingFocus.Group>
            {items.map((item,index) => (
             <RovingFocus.Item index={index}>
-                   {item.label}
+                  <Button> {item.label} </Button>
                 </RovingFocus.Item>
                 
               ))}  
-        </RovingFocus.Group>      
+        </RovingFocus.Group> 
+       
     </RovingFocus.Root>
 </SandboxEditor>
 }

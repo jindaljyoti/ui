@@ -1,16 +1,24 @@
-import {KeyboardEvent} from "react";
-import { useRovingFocus } from "../fragments/RovingFocusRoot";
 
-export const useKeyboardNavigation = () => {
-    const { moveFocus, getNavigationKeys } = useRovingFocus()
-    const { next, prev} = getNavigationKeys()
+export const handleKeyDown = (
+  event: KeyboardEvent, 
+  containerRef: React.RefObject<HTMLElement>,
+  role: string) => {
+     
+  const focusableItems = containerRef.current?.querySelectorAll<HTMLButtonElement>(`[role = "${role}"]`)
+    
+    
+  if(!focusableItems?.length) return
+  const currentIndex = Array.from(focusableItems).findIndex((item) => item === document.activeElement)
+  let nextIndex = currentIndex
+  const length = focusableItems.length
+  if(event.key === 'ArrowRight') {
+      nextIndex = (currentIndex + 1) % length
+  }
 
-      return (event: KeyboardEvent<HTMLElement>):void => {
-           if(event.key === next) {
-            moveFocus('next')
-           }
-           if(event.key === prev) {
-             moveFocus('prev')
-           }
-    }
-} 
+  else if(event.key === 'ArrowLeft') {
+      nextIndex = (currentIndex -1 + length) % length
+  }
+  focusableItems[nextIndex]?.focus()
+
+ 
+}
